@@ -1,32 +1,50 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Mapa de Calor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
-  <style>
-    #map { width: 100%; height: 600px; }
-  </style>
-</head>
-<body>
-  <h3>Mapa de Calor - Google Sheets</h3>
-  <div id="map"></div>
-  <script>
-    var map = L.map('map').setView([-12.0464, -77.0428], 10); // Centrado en Lima
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '? OpenStreetMap contributors'
-    }).addTo(map);
+  <html lang="es">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Mapa de Calor - Lima y Callao</title>
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+      <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  </head>
+  <body>
+      <div id="map" style="width: 100%; height: 600px;"></div>
+      <script>
+          var map = L.map('map').setView([-12.0464, -77.0428], 10); // Centro inicial: Lima y Callao
+          
+          // Cargar mapa base de OpenStreetMap
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 18,
+          }).addTo(map);
 
-    var heatData = [
-      [-12.0705301, -77.0644599, PC, ],[-77.0621346, PC2, -12.084436 ]
-    ];
+          // Coordenadas para el mapa de calor
+          var heatData = [
+  [-12.084436, -77.0644599], [-12.0705301, -77.0621346], 
+          ];
 
-    L.heatLayer(heatData, {radius: 20, blur: 15}).addTo(map);
-  </script>
-</body>
-</html>
-  
+          // Crear el mapa de calor
+          L.heatLayer(heatData, {radius: 25}).addTo(map);
+
+          // Agregar marcadores con descripciones
+          var markers = [
+  {
+      lat: -12.084436,
+      lon: -77.0644599,
+      desc: "PC"
+    }, {
+      lat: -12.0705301,
+      lon: -77.0621346,
+      desc: "PC2"
+    }, 
+          ];
+
+          // A?adir los marcadores al mapa
+          markers.forEach(function(marker) {
+              L.marker([marker.lat, marker.lon])
+                .addTo(map)
+                .bindPopup(marker.desc);
+          });
+      </script>
+  </body>
+  </html>
