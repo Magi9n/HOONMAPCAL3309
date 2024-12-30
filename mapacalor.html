@@ -26,7 +26,7 @@
           // Crear el mapa de calor
           L.heatLayer(heatData, {radius: 90}).addTo(map);
 
-          // Agregar marcadores con descripciones
+          // Agregar marcadores invisibles con descripciones
           var markers = [
   {
       lat: -12.084436,
@@ -1515,11 +1515,20 @@
     }, 
           ];
 
-          // A?adir los marcadores al mapa
+          // A?adir marcadores invisibles al mapa
           markers.forEach(function(marker) {
-              L.marker([marker.lat, marker.lon])
-                .addTo(map)
-                .bindPopup(marker.desc);
+              L.circleMarker([marker.lat, marker.lon], {
+                  radius: 1, // Radio muy peque?o
+                  opacity: 0, // Invisible
+              })
+              .addTo(map)
+              .bindPopup(marker.desc) // Mostrar popup con descripci?n
+              .on('mouseover', function(e) {
+                  this.openPopup(); // Abrir popup al pasar el mouse
+              })
+              .on('mouseout', function(e) {
+                  this.closePopup(); // Cerrar popup al quitar el mouse
+              });
           });
       </script>
   </body>
