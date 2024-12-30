@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mapa de Calor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map { width: 100%; height: 600px; }
+  </style>
+</head>
+<body>
+  <h3>Mapa de Calor - Google Sheets</h3>
+  <div id="map"></div>
+  <script>
+    var map = L.map('map').setView([-12.0464, -77.0428], 10); // Centrado en Lima
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '? OpenStreetMap contributors'
+    }).addTo(map);
+
+    var heatData = [
+      [-77.0644599, PC, ]
+    ];
+
+    L.heatLayer(heatData, {radius: 20, blur: 15}).addTo(map);
+  </script>
+</body>
+</html>
+  
